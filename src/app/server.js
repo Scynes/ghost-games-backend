@@ -2,6 +2,7 @@ import Express from 'express';
 import Mongoose from 'mongoose';
 import DotENV from 'dotenv';
 import Http from 'http';
+import CORS from 'cors';
 
 import Session from 'express-session';
 import MongoStore from 'connect-mongo';
@@ -81,7 +82,7 @@ const bindMiddleware = () => {
             store: MongoStore.create({ mongoUrl: DATABASE_URI })
         })
     );
-    APPLICATION.use(cors());
+    APPLICATION.use(CORS());
 
     console.log(`${APP_NAME} - successfully bound middleware...`)
 }

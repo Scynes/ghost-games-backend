@@ -5,13 +5,15 @@ class CreateGame extends Packet {
 
     handle = async (socket, payload) => {
 
-        if (!(getGameSession(payload) === null)) return socket.emit('session exists', 'Session already exists!');
+        if (!payload.displayName) return socket.emit('no displayname', 'You must set a display name!');
 
-        const NEW_SESSION = await createGameSession(payload, socket.id, 4);
+        if (!(getGameSession(payload.room) === null)) return socket.emit('session exists', 'Session already exists!');
 
-        NEW_SESSION.join(socket.id);
-        socket.join(payload);
-        socket.emit('created game', `Game room created - ${payload.toUpperCase()}`);
+        const NEW_SESSION = await createGameSession(payload.room, socket.id, 4);
+
+        NEW_SESSION.join(socket.id, payload.displayName);
+        socket.join(payload.room);
+        socket.emit('created game', `Game room created - ${payload.room.toUpperCase()}`);
     }
 }
 

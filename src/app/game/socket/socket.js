@@ -19,7 +19,7 @@ const get = () => this.SERVER_SOCKET;
 const bindConnectionListener = () => {
 
     SERVER_SOCKET.on('connection', socket => {
-
+        
         // Setup the ping pong...
         socket.emit('user connect', 'Successfully connected!');
 
@@ -44,7 +44,12 @@ const bindConnectionListener = () => {
  */
 export const attachSocket = async (server) => {
 
-    SERVER_SOCKET = new ServerSocket(server);
+    SERVER_SOCKET = new ServerSocket(server, {
+        cors: {
+            origin: "http://localhost:3001",
+            methods: ["GET", "POST"]
+        }
+    });
 
     await buildPackets();
 

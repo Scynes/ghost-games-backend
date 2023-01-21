@@ -18,6 +18,11 @@ export class Trivia {
     #triviaSchema;
 
     /**
+     * An array containing the connect socket player names.
+     */
+    #playerDisplayNames = [];
+
+    /**
      * Array containing a list of connected socket clients.
      */
     #SOCKET_CONNECTIONS = [];
@@ -34,11 +39,13 @@ export class Trivia {
      * @param {*} socketId the id of the player client socket.
      * @returns true or false
      */
-    join = (socketId) => {
+    join = (socketId, displayName) => {
 
         if (this.#SOCKET_CONNECTIONS.length == this.maxPlayers) return false;
 
-        this.#SOCKET_CONNECTIONS.push(socketId)
+        this.#SOCKET_CONNECTIONS.push(socketId);
+
+        this.#playerDisplayNames.push(displayName);
 
         return true;
     }
@@ -51,6 +58,11 @@ export class Trivia {
     getTriviaSchema = () => {
 
         return this.#triviaSchema;
+    }
+
+    getPlayerDisplayNames = () => {
+
+        return this.#playerDisplayNames;
     }
 
     getMaxPlayers = () => {

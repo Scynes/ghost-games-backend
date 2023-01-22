@@ -5,9 +5,9 @@ import Hasher from 'bcrypt';
  * 
  * @param {*} input
  */
-export const generateHashed = input => {
+export const generateHashed = async input => {
 
-    return Hasher.hash(input, 10);
+    return await Hasher.hash(input, 10);
 }
 
 /**
@@ -18,7 +18,7 @@ export const generateHashed = input => {
  * @param {*} against 
  * @returns 
  */
-export const matchesHashed = (input, against) => {
+export const matchesHashed = async (input, against) => {
 
-    return Hasher.compare(input, against);
+    return await Hasher.compare(input, against);
 }

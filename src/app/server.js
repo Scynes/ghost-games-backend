@@ -82,7 +82,10 @@ const bindMiddleware = () => {
             store: MongoStore.create({ mongoUrl: DATABASE_URI })
         })
     );
-    APPLICATION.use(CORS());
+    APPLICATION.use(CORS({
+        origin: 'http://localhost:3001',
+        credentials: true
+    }));
 
     console.log(`${APP_NAME} - successfully bound middleware...`)
 }

@@ -1,6 +1,7 @@
 import { APIHandler } from "./api-handler.js";
 import { ACCOUNT_MODEL } from "../../models/account-schema.js";
 import { generateHashed, matchesHashed } from '../../utils/hashing.js'
+import JSONWebToken from "jsonwebtoken";
 
 class Account extends APIHandler {
 
@@ -24,9 +25,30 @@ class Account extends APIHandler {
         if (ACCOUNT) {
 
             if (await matchesHashed(!request.body.password ? 'nothing' : request.body.password, ACCOUNT.password)) {
-                request.session.isLoggedIn = true;
+                //request.session.isLoggedIn = true;
 
-                return response.json(ACCOUNT);
+                const TOKEN = JSONWebToken.sign(
+                    {
+                        username: ACCOUNT.username
+                    },
+                    "gengarisbestpokemon",
+                    {
+                        expiresIn: '1h'
+                    }
+                )
+
+                /*return response.json({ 
+                    success: true, 
+                    data: {
+                        username: ACCOUNT.username,
+                        token: TOKEN
+                    } 
+                });*/
+
+                response.cookie('token', TOKEN, {maxAge: 60 * 100 * 1000 });
+                response.end();
+
+                return;
 
             } else {
 

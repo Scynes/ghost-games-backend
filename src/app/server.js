@@ -83,7 +83,7 @@ const bindMiddleware = () => {
         })
     );
     APPLICATION.use(CORS({
-        origin: 'http://localhost:3001',
+        origin: 'https://ghost-games.netlify.app',
         credentials: true
     }));
 

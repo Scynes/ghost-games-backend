@@ -25,7 +25,7 @@ export default {
             throw new Error(`Argument 'other' in method obj.is(obj, other) must be of type String, received ${typeof other}!`);
         }
 
-        return ((typeof obj).toLocaleLowerCase() === other.toLocaleLowerCase());
+        return ((typeof obj).toLowerCase() === other.toLowerCase());
     },
 
     /**
